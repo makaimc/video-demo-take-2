@@ -9,7 +9,7 @@ Twilio.getUserMedia().then(
   }
 );
 
-window.accessToken = "twilio video access token";
+window.accessToken = "twilio access token";
 
 var activeConversation;
 var endpoint = new Twilio.Endpoint(accessToken);
@@ -23,11 +23,12 @@ document.getElementById('button-invite').onclick = function() {
   var inviteTo = document.getElementById('invite-to').value;
 
   var options = {}.localMedia = previewMedia;
-  endpoint.createConversation(inviteTo, options).then(function(conversation) {
-    activeConversation = conversation;
-    conversation.on('participantConnected', function(participant) {
-      participant.media.attach('#remote-media');
-    });
-  });
+  endpoint.createConversation(inviteTo, options).then(conversationStarted);
 }
 
+function conversationStarted(conversation) {
+  activeConversation = conversation;
+  conversation.on('participantConnected', function(participant) {
+    participant.media.attach('#remote-media');
+  });
+}
