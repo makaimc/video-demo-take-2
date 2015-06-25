@@ -8,7 +8,6 @@ Twilio.getUserMedia().then(
 
 window.accessToken = "twilio access token";
 
-var activeConversation;
 var endpoint = new Twilio.Endpoint(accessToken);
 endpoint.listen().then(function() {
   endpoint.on('invite', function(invite) {
@@ -24,7 +23,6 @@ document.getElementById('button-invite').onclick = function() {
 }
 
 function conversationStarted(conversation) {
-  activeConversation = conversation;
   conversation.on('participantConnected', function(participant) {
     participant.media.attach('#remote-media');
   });
